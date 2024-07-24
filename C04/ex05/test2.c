@@ -62,17 +62,19 @@ int	ft_atoi_base(char *str, char *base)
 		return (0);
 	res = 0;
 	i = 0;
-	sign = 1;
-	while (str[i] == 32 && i < len_str)
-		i++;
+	while (str[i++] == 32 && i < len_str)
 	while ((str[i] == 43 || str[i] == 45) && i < len_str)
 	{
 		if (str[i] == 45)
 			sign = sign * -1;
 		i++;
 	}
-	while (ft_convert(str[i], base, len_base) >= 0 && i++)
-		res = res * len_base + ft_convert(str[i], base, len_base);
+	while (i++ < len_str)
+	{
+		if (ft_convert(str[i], base, len_base) < 0)
+			break ;
+		res = (res * len_base) + ft_convert(str[i], base, len_base);
+	}
 	return (res * sign);
 }
 
