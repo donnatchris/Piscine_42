@@ -1,27 +1,23 @@
 #include "struct.h"
 #include <unistd.h>
 
-
-#define MAX_TAB_SIZE 1000
-
-
-int	str_len(char *str);
+int	ft_strlen(char *str);
 
 void	ft_is_hundred(char *str, t_dic *tab)
 {
 	int	j;
 
 	j = 0;
-	while (*str != tab[j].key[0] && j < MAX_TAB_SIZE)
+	while (*str != tab[j].key[0])
 		j++;
 	if (*str >= '2' && *str <= '9')
 	{
-		write(1, tab[j].value, str_len(tab[j].value));
+		write(1, tab[j].value, ft_strlen(tab[j].value));
 		write(1, " ", 1);
 	}
 	if (*str != '0')
 	{
-		write(1, tab[28].value, str_len(tab[28].value));
+		write(1, tab[28].value, ft_strlen(tab[28].value));
 		write(1, " ", 1);
 	}
 }
@@ -33,18 +29,18 @@ void	ft_is_ten(char *str, t_dic *tab)
 	if (*str >= '2' && *str <= '9')
 	{
 		j = 20;
-		while (*str != tab[j].key[0] && j < MAX_TAB_SIZE)
+		while (*str != tab[j].key[0])
 			j++;
-		write(1, tab[j].value, str_len(tab[j].value));
+		write(1, tab[j].value, ft_strlen(tab[j].value));
 		write(1, " ", 1);
 	}
 	if (*str == '1')
 	{
 		j = 10;
 		str++;
-		while (*str != tab[j].key[1] && j < MAX_TAB_SIZE)
+		while (*str != tab[j].key[1])
 			j++;
-		write(1, tab[j].value, str_len(tab[j].value));
+		write(1, tab[j].value, ft_strlen(tab[j].value));
 		write(1, " ", 1);
 		str--;
 	}
@@ -65,21 +61,34 @@ void	ft_is_unit(char *str, t_dic *tab)
 	{
 		j = 0;
 
-		while (*str != tab[j].key[0] && j < MAX_TAB_SIZE)
+		while (*str != tab[j].key[0])
 			j++;
-		write(1, tab[j].value, str_len(tab[j].value));
+		write(1, tab[j].value, ft_strlen(tab[j].value));
 		write(1, " ", 1);
 	}
+}
+
+void	ft_is_big(char *str, t_dic *tab, int len)
+{
+	int	j;
+
+	j = 0;
+	if (*str == '0' && str[-1] == '0' && str[-2] == '0')
+		return;
+	while (len != tab[j].key_len)
+		j++;
+	write(1, tab[j].value, ft_strlen(tab[j].value));
+	write(1, " ", 1);
 }
 
 void	ft_print(char *str, t_dic *tab)
 {
 	int		len; 
 
-	len = str_len(str);
+	len = ft_strlen(str);
 	if (*str == '0' && len == 1)
 	{
-		write(1, tab[0].value, str_len(tab[0].value));
+		write(1, tab[0].value, ft_strlen(tab[0].value));
 		write(1, "\n", 1);
 		return;
 	}
@@ -90,11 +99,13 @@ void	ft_print(char *str, t_dic *tab)
 		if (len % 3 == 2)
 			ft_is_ten(str, tab);
 		if (len % 3 == 1)
+		{
 			ft_is_unit(str, tab);
+			ft_is_big(str, tab, len);
+		}
 		str++;
 		len--;
 	}
 	ft_is_unit(str, tab);
 	write(1, "\n", 1);
 }
-

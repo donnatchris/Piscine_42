@@ -17,6 +17,9 @@ void	ft_is_hundred(char *str, t_dic *tab)
 	}
 	if (*str != '0')
 	{
+		j = 0;
+		while (tab[j].key_len != 3)
+		j++;
 		write(1, tab[28].value, ft_strlen(tab[28].value));
 		write(1, " ", 1);
 	}
@@ -28,17 +31,17 @@ void	ft_is_ten(char *str, t_dic *tab)
 
 	if (*str >= '2' && *str <= '9')
 	{
-		j = 20;
-		while (*str != tab[j].key[0])
+		j = 0;
+		while (*str != tab[j].key[0] || tab[j].key_len != 2)
 			j++;
 		write(1, tab[j].value, ft_strlen(tab[j].value));
 		write(1, " ", 1);
 	}
 	if (*str == '1')
 	{
-		j = 10;
+		j = 0;
 		str++;
-		while (*str != tab[j].key[1])
+		while (*str != tab[j].key[1] || tab[j].key_len != 2)
 			j++;
 		write(1, tab[j].value, ft_strlen(tab[j].value));
 		write(1, " ", 1);
@@ -60,8 +63,7 @@ void	ft_is_unit(char *str, t_dic *tab)
 	if (*str >= '1' && *str <= '9')
 	{
 		j = 0;
-
-		while (*str != tab[j].key[0])
+		while (*str != tab[j].key[0] || tab[j].key_len != 1)
 			j++;
 		write(1, tab[j].value, ft_strlen(tab[j].value));
 		write(1, " ", 1);
